@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  password    String? // Only used for email-based authentication
+  avatarUrl   String?
+  provider    Provider
+  createdAt   DateTime @default(now())
+  typingTests TypingTest[]
+  friendsOf   Friendship[] @relation("UserFriends")
+  friendships Friendship[] @relation("UserFriendships")
+  multiplayerSessions MultiplayerSession[]
+  multiplayerParticipations MultiplayerParticipant[]
+  leaderboard Leaderboard?
+}
+
+model TypingTest {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  wpm         Int
+  accuracy    Float
+  testDuration Int
+  difficulty  Difficulty
+  createdAt   DateTime @default(now())
+}
+
+model Leaderboard {
+  id       String   @id @default(uuid())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String   @unique
+  bestWPM  Int
+  bestAccuracy Float
+  updatedAt DateTime @updatedAt
+}
+
+model MultiplayerSession {
+  id          String   @id @default(uuid())
+  host        User     @relation(fields: [hostId], references: [id])
+  hostId      String
+  players     MultiplayerParticipant[]
+  startTime   DateTime
+  endTime     DateTime?
+  status      SessionStatus @default(PENDING)
+
+  @@unique([hostId, status])
+}
+
+model MultiplayerParticipant {
+  id        String   @id @default(uuid())
+  session   MultiplayerSession @relation(fields: [sessionId], references: [id])
+  sessionId String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  wpm       Int?
+  accuracy  Float?
+}
+
+model Friendship {
+  id        String   @id @default(uuid())
+  user      User     @relation("UserFriendships", fields: [userId], references: [id])
+  userId    String
+  friend    User     @relation("UserFriends", fields: [friendId], references: [id])
+  friendId  String
+  status    FriendshipStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, friendId])
+}
+
+enum Provider {
+  google
+  github
+}
+
+enum Difficulty {
+  easy
+  medium
+  hard
+}
+
+enum SessionStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
