@@ -8,6 +8,8 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.post("/verify", async (req, res) => {
+    console.log("req.body", req.body);
+
     const { email, name, avatarUrl, provider } = req.body;
     try {
         let user = await prisma.user.findUnique({ where: { email } });
@@ -27,6 +29,8 @@ router.post("/verify", async (req, res) => {
 
         res.json({ token, user });
     } catch (error) {
+        console.log("error", error);
+
         res.status(500).json({ error: "Authentication failed" });
     }
 });

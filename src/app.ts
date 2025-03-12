@@ -18,7 +18,7 @@ const prisma = new PrismaClient();
 const server = http.createServer(app);
 const io = new SocketIOServer(server, { cors: { origin: "*" } });
 
-app.use(cors({ origin: "*", credentials: true }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 

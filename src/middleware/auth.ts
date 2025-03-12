@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { parse } from "cookie";
 
 dotenv.config();
 
@@ -13,7 +14,8 @@ export const authMiddleware = (
     res: Response | any,
     next: NextFunction
 ) => {
-    const token = req.headers.authorization?.split(" ")[1];
+    const cookies = parse(req.headers.cookie || "");
+    const token = cookies["next-auth-session"];
 
     if (!token) {
         return res.status(401).json({ error: "Unauthorized" });
@@ -24,10 +26,7 @@ export const authMiddleware = (
     }
 
     try {
-        const decoded = jwt.verify(
-            token,
-            process.env.JWT_SECRET
-        ) as jwt.JwtPayload;
+        const decoded = jwt.verify(token, "mysecret") as jwt.JwtPayload;
 
         if (!decoded.userId) {
             return res.status(403).json({ error: "Invalid token payload" });
