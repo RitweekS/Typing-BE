@@ -5,11 +5,11 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 // import { PrismaClient } from "@prisma/client";
 // import { Server as SocketIOServer } from "socket.io";
-import authRoutes from "./routes/authRoutes/auth";
-import testRoutes from "./routes/typingTestRoutes/typingTest";
-import leaderboardRoutes from "./routes/leaderboardRoutes/leaderboard";
-import multiplayerRoutes from "./routes/multiplayerRoutes/multiplayer";
-import friendsRoutes from "./routes/friendsRoutes/friends";
+import authRoutes from "../routes/authRoutes/auth";
+import testRoutes from "../routes/typingTestRoutes/typingTest";
+import leaderboardRoutes from "../routes/leaderboardRoutes/leaderboard";
+import multiplayerRoutes from "../routes/multiplayerRoutes/multiplayer";
+import friendsRoutes from "../routes/friendsRoutes/friends";
 
 dotenv.config();
 
