@@ -23,9 +23,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Example route
-app.get("/users", async (req, res) => {
-    const users = await prisma.user.findMany();
-    res.json(users);
+app.get("/", async (req, res) => {
+    res.send("Running");
 });
 
 app.use("/auth", authRoutes);
