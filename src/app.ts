@@ -34,7 +34,7 @@ app.use("/leaderboard", leaderboardRoutes);
 app.use("/multiplayer", multiplayerRoutes(io)); // Pass `io` to multiplayer
 app.use("/friends", friendsRoutes);
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
