@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: "https://typing-fe.vercel.app", credentials: true }));
+app.use(cors({ origin: "https://typing.ritweek.site", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
