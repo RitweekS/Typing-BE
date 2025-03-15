@@ -8,7 +8,9 @@
     "migrate": "npx prisma migrate dev",
     "generate": "npx prisma generate",
     "seed": "npx prisma db seed",
-    "test": "jest"
+    "test": "jest",
+    "build": "npx prisma generate && tsc",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
