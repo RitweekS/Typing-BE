@@ -4,8 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/api/index.js",
-    "dev": "nodemon api/index.ts",
-    "build": "tsc",
+    "dev": "nodemon src/api/index.ts",
     "migrate": "npx prisma migrate dev",
     "generate": "npx prisma generate",
     "seed": "npx prisma db seed",
