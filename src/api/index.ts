@@ -12,7 +12,17 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: "https://typing.ritweek.site", credentials: true }));
+// app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+    cors({
+        origin: "https://typing.ritweek.site", // Must match frontend URL exactly
+        credentials: true, // Allow cookies to be sent
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        exposedHeaders: ["Authorization", "Set-Cookie"],
+    })
+);
+
 app.use(express.json());
 app.use(cookieParser());
 
